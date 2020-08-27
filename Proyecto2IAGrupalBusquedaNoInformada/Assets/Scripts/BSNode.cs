@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public class BSNode 
 {
-    float data;
+    public float data;
     public float val = 100000;
     public bool visitado = false;
     public BSNode padre;
-    public List<BSNode> adyacentes;
-    public List<float> costoAdyacentes;
+    public List<BSNode> adyacentes = new List<BSNode>();
+    public List<float> costoAdyacentes = new List<float>();
     public float getData()
     {
         return data;
