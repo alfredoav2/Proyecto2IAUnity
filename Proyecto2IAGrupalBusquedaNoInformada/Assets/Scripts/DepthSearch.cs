@@ -5,32 +5,33 @@ using UnityEngine;
 
 public class DepthSearch : MonoBehaviour
 {
-
-	public DSNode searchBFS(float data, DSNode start)
+	public DSNode end;
+	public DSNode begining;
+	public DSNode last;
+	public DSNode lookForDPS(float data, DSNode node)
 	{
-		LinkedList<DSNode> visited = new LinkedList<DSNode>();
-		Queue<DSNode> queue = new Queue<DSNode>();
+		data = end.value;
+		node = begining;
 
-		visited.AddLast(start);
-		queue.Enqueue(start);
+		if (node.Equals(null)) return null;
 
-		while (queue.Count > 0)
+		if (node.value.Equals(data))
 		{
-			start = queue.Peek();
-			if (start.value.Equals(data)) return start;
-			queue.Dequeue();
-
-			for (int i = 0; i < start.vertex.Count; i++)
-			{
-				DSNode tmp = start.vertex[i];
-				if (!visited.Contains(tmp))
-				{
-					visited.AddLast(tmp);
-					queue.Enqueue(tmp);
-				}
-			}
+			last = node;
+			return node;
 		}
 
+		//Aqui se puede añadir a un stack
+
+		for (int i = 0; i < node.vertex.Count; i++)
+		{
+			if (!node.vertex[i].Equals(null))
+				lookForDPS(data, node.vertex[i]);
+			if (last.value.Equals(data))
+				return last;
+		}
+
+		//Aqui se borraría del stack
 		return null;
 	}
 }
