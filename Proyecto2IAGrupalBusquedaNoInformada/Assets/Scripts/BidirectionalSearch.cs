@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BidirectionalSearch<T> : MonoBehaviour
+public class BidirectionalSearch : MonoBehaviour
 {
 
-    public Queue<BSNode<T>> qv;
-    public BSNode<T> padre = null;
+    public Queue<BSNode> qv;
+    public BSNode padre = null;
 
     public BidirectionalSearch() { }
-    public BidirectionalSearch(T data, int v)
+    public BidirectionalSearch(float data, int v)
     {
         if (padre == null)
         {
-            padre = new BSNode<T>(data, v);
+            padre = new BSNode(data, v);
         }
     }
 
-    void addEdge(T dataParend, T data, int cost)
+    void addEdge(float dataParend, float data, float cost)
     {
-        BSNode<T> tmp = DSearch(dataParend);
+        BSNode tmp = DSearch(dataParend);
         if (tmp != null && !dataParend.Equals(data))
         {
             if (DSearch(data).Equals(null))
             {
-                tmp.adyacentes.Add(new BSNode<T>(data, 10000));
+                tmp.adyacentes.Add(new BSNode(data, 10000));
                 tmp.costoAdyacentes.Add(cost);
             }
             else if (searchPadre(tmp, data).Equals(null))
@@ -35,16 +35,16 @@ public class BidirectionalSearch<T> : MonoBehaviour
         }
     }
 
-    BSNode<T> searchPadre(BSNode<T> head, T data)
+    BSNode searchPadre(BSNode head, float data)
     {
-        BSNode<T> tmp = head;
+        BSNode tmp = head;
         while (!tmp.Equals(null))
         {
             qv.Enqueue(tmp);
             if (tmp.visitado.Equals(false))
             {
                 tmp.visitado = true;
-                foreach (BSNode<T> adyacente in tmp.adyacentes)
+                foreach (BSNode adyacente in tmp.adyacentes)
                 {
                     adyacente.visitado = true;
                     qv.Enqueue(adyacente);
@@ -62,10 +62,10 @@ public class BidirectionalSearch<T> : MonoBehaviour
         return null;
     }
 
-    BSNode<T> search(T data)
+    BSNode search(float data)
     {
-        Queue<BSNode<T>> qs = new Queue<BSNode<T>>();
-        BSNode<T> tmp = padre;
+        Queue<BSNode> qs = new Queue<BSNode>();
+        BSNode tmp = padre;
         while (!tmp.Equals(null))
         {
             qv.Enqueue(tmp);
@@ -77,7 +77,7 @@ public class BidirectionalSearch<T> : MonoBehaviour
             else if (tmp.visitado != true)
             {
                 tmp.visitado = true;
-                foreach (BSNode<T> adyacente in tmp.adyacentes)
+                foreach (BSNode adyacente in tmp.adyacentes)
                 {
                     qs.Enqueue(adyacente);
                     qv.Enqueue(adyacente);
@@ -94,10 +94,10 @@ public class BidirectionalSearch<T> : MonoBehaviour
         return null;
     }
 
-    BSNode<T> DSearch(T data)
+    BSNode DSearch(float data)
     {
-        Stack<BSNode<T>> ss = new Stack<BSNode<T>>();
-        BSNode<T> tmp = padre;
+        Stack<BSNode> ss = new Stack<BSNode>();
+        BSNode tmp = padre;
         ss.Push(tmp);
         while (tmp != null)
         {
@@ -113,7 +113,7 @@ public class BidirectionalSearch<T> : MonoBehaviour
                 tmp.visitado = true;
                 qv.Enqueue(tmp);
                 ss.Pop();
-                foreach(BSNode<T> adyacente in tmp.adyacentes)
+                foreach(BSNode adyacente in tmp.adyacentes)
                 if (adyacente.visitado != true)
                 {
                     ss.Push(adyacente);
