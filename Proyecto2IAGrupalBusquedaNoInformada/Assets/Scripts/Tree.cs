@@ -39,14 +39,14 @@ public class Tree : MonoBehaviour
 	{
 		DSNode tmp = lookForDPS(parent, root);
 
-		if (tmp == true)
+		if (tmp != null)
 		{
-			DSNode nodo = Instantiate(nodoDepthSearch).GetComponent<DSNode>();
 			if (lookForDPS(data, root) != null)
 				return false;
-			DSNode newNode = new DSNode(data);
+			DSNode nodo = Instantiate(nodoDepthSearch).GetComponent<DSNode>();
 			tmp.vertex.Add(nodo);
-			newNode.parent = tmp;
+			nodo.value = data;
+			nodo.parent = tmp;
 			return true;
 		}
 		else

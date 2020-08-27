@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class BreadthSearch : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public DSNode end;
+	public DSNode begining;
+	public DSNode searchBFS(float data, DSNode start)
+	{
+		data = end.value;
+		start = begining;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		LinkedList<DSNode> visited = new LinkedList<DSNode>();
+		Queue<DSNode> queue = new Queue<DSNode>();
+
+		visited.AddLast(start);
+		queue.Enqueue(start);
+
+		while (queue.Count > 0)
+		{
+			start = queue.Peek();
+			if (start.value.Equals(data)) return start;
+			queue.Dequeue();
+
+			for (int i = 0; i < start.vertex.Count; i++)
+			{
+				DSNode tmp = start.vertex[i];
+				if (!visited.Contains(tmp))
+				{
+					visited.AddLast(tmp);
+					queue.Enqueue(tmp);
+				}
+			}
+		}
+
+		return null;
+	}
 }
