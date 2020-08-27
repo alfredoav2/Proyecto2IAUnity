@@ -9,8 +9,8 @@ public class BSNode : MonoBehaviour
     public float val = 100000;
     public bool visitado = false;
     public BSNode padre;
-    public List<BSNode> adyacentes;
-    public List<float> costoAdyacentes;
+    public List<BSNode> adyacentes = new List<BSNode>();
+    public List<float> costoAdyacentes = new List<float>();
     public float getData()
     {
         return data;
@@ -25,7 +25,6 @@ public class BSNode : MonoBehaviour
 
     private void Start()
     {
-        adyacentes = new List<BSNode>();
-        costoAdyacentes = new List<float>();
+        
     }
 }
