@@ -1,20 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class BSNode <T>
+public class BSNode 
 {
-    T data;
-    public int val = 100000;
+    float data;
+    public float val = 100000;
     public bool visitado = false;
-    public BSNode<T> padre;
-    public List<BSNode<T>> adyacentes;
-    public List<int> costoAdyacentes;
-    public T getData()
+    public BSNode padre;
+    public List<BSNode> adyacentes;
+    public List<float> costoAdyacentes;
+    public float getData()
     {
         return data;
     }
     public BSNode() { }
-    public BSNode(T d, int v)
+    public BSNode(float d, float v)
     {
         data = d;
         val = v;
