@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Graph : MonoBehaviour
@@ -30,9 +28,10 @@ public class Graph : MonoBehaviour
                 BSNode nodo = Instantiate(nodoChad).GetComponent<BSNode>();
                 //Comentario para que no se nos olvide
                 //Asignarle dato y val
-                tmp.data = data;
+                nodo.data = data;
+
+
                 tmp.adyacentes.Add(nodo);
-                
                 tmp.costoAdyacentes.Add(cost);
             }
             else if (searchPadre(tmp, data) == null)
@@ -164,7 +163,7 @@ public class Graph : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+
         addEdge(0, 1, 1);
         addEdge(0, 2, 2);
         addEdge(0, 8, 3);
