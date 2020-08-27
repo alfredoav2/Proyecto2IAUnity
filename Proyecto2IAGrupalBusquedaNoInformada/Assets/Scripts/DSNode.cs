@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DSNode<T>
+public class DSNode
 {
-    public T value;
-    public DSNode<T> parent;
-    public List<DSNode<T>> vertex = new List<DSNode<T>>();
-    public DSNode(T v)
+    public float value;
+    public DSNode parent;
+    public List<DSNode> vertex = new List<DSNode>();
+    public DSNode(float v)
     {
         value = v;
-        vertex = new List<DSNode<T>>(); 
+        vertex = new List<DSNode>(); 
     }
-    public DSNode(T v, int size)
+    public DSNode(float v, int size)
     {
         value = v;
-        vertex = new List<DSNode<T>>(size);
+        vertex = new List<DSNode>(size);
     }
     ~DSNode() { vertex.Clear(); }
 }
