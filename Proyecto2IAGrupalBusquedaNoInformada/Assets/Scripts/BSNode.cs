@@ -1,14 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class BSNode 
+[Serializable]
+public class BSNode : MonoBehaviour
 {
     public float data;
     public float val = 100000;
     public bool visitado = false;
     public BSNode padre;
-    public List<BSNode> adyacentes = new List<BSNode>();
-    public List<float> costoAdyacentes = new List<float>();
+    public List<BSNode> adyacentes;
+    public List<float> costoAdyacentes;
     public float getData()
     {
         return data;
@@ -20,4 +22,10 @@ public class BSNode
         val = v;
     }
     ~BSNode() { }
+
+    private void Start()
+    {
+        adyacentes = new List<BSNode>();
+        costoAdyacentes = new List<float>();
+    }
 }
