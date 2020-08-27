@@ -5,7 +5,7 @@ using UnityEngine;
 public class BidirectionalSearch : MonoBehaviour
 {
 
-    public Queue<BSNode> qv;
+    public Queue<BSNode> qv = new Queue<BSNode>();
     public BSNode padre = null;
 
     public BidirectionalSearch() { }
@@ -17,17 +17,17 @@ public class BidirectionalSearch : MonoBehaviour
         }
     }
 
-    void addEdge(float dataParend, float data, float cost)
+    public void addEdge(float dataParend, float data, float cost)
     {
         BSNode tmp = DSearch(dataParend);
         if (tmp != null && !dataParend.Equals(data))
         {
-            if (DSearch(data).Equals(null))
+            if (DSearch(data) == null)
             {
                 tmp.adyacentes.Add(new BSNode(data, 10000));
                 tmp.costoAdyacentes.Add(cost);
             }
-            else if (searchPadre(tmp, data).Equals(null))
+            else if (searchPadre(tmp, data) == null)
             {
                 tmp.adyacentes.Add(DSearch(data));
                 tmp.costoAdyacentes.Add(cost);
@@ -35,7 +35,7 @@ public class BidirectionalSearch : MonoBehaviour
         }
     }
 
-    BSNode searchPadre(BSNode head, float data)
+    public BSNode searchPadre(BSNode head, float data)
     {
         BSNode tmp = head;
         while (!tmp.Equals(null))
@@ -62,7 +62,7 @@ public class BidirectionalSearch : MonoBehaviour
         return null;
     }
 
-    BSNode search(float data)
+    public BSNode search(float data)
     {
         Queue<BSNode> qs = new Queue<BSNode>();
         BSNode tmp = padre;
@@ -94,60 +94,82 @@ public class BidirectionalSearch : MonoBehaviour
         return null;
     }
 
-    BSNode DSearch(float data)
+    public BSNode DSearch(float data)
     {
         Stack<BSNode> ss = new Stack<BSNode>();
         BSNode tmp = padre;
         ss.Push(tmp);
-        while (tmp != null)
+        if (ss.Count > 0)
         {
-            //cout << tmp->visitado << endl;
-            tmp.getData();
-            if (tmp.getData().Equals(data))
+            while (tmp != null)
             {
-                resetVisitados();
-                return tmp;
-            }
-            else if (tmp.visitado != true)
-            {
-                tmp.visitado = true;
-                qv.Enqueue(tmp);
-                ss.Pop();
-                foreach(BSNode adyacente in tmp.adyacentes)
-                if (adyacente.visitado != true)
+                //cout << tmp->visitado << endl;
+                tmp.getData();
+                if (tmp.getData().Equals(data))
                 {
-                    ss.Push(adyacente);
+                    resetVisitados();
+                    return tmp;
                 }
+                else if (tmp.visitado != true)
+                {
+                    tmp.visitado = true;
+                    qv.Enqueue(tmp);
+                    ss.Pop();
+                    foreach (BSNode adyacente in tmp.adyacentes)
+                    {
+                        if (adyacente.visitado != true)
+                        {
+                            ss.Push(adyacente);
+                        }
+                    }
+                }
+                else
+                {
+                    ss.Pop();
+                }
+                if (ss.Count<=0)
+                {
+                    resetVisitados();
+                    //cout << "nop" << endl;
+                    return null;
+                }
+                tmp = ss.Peek();
             }
-            else
-            {
-                ss.Pop();
-            }
-            if (ss.Peek().Equals(null))
-            {
-                resetVisitados();
-                //cout << "nop" << endl;
-                return null;
-            }
-            tmp = ss.Peek();
+            resetVisitados();
+            return null;
         }
-        resetVisitados();
         return null;
     }
 
-    void resetVisitados()
+    public void resetVisitados()
     {
-        while (qv.Count > 0)
+        if (qv.Count > 0)
         {
-            qv.Peek().visitado = false;
-            qv.Dequeue();
+            while (qv.Count > 0)
+            {
+                qv.Peek().visitado = false;
+                qv.Dequeue();
+            }
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        BidirectionalSearch gr = new BidirectionalSearch(0, 0);
+        gr.addEdge(0, 1, 1);
+        gr.addEdge(0, 2, 2);
+        gr.addEdge(0, 8, 3);
+        gr.addEdge(0, 3, 5);
+        gr.addEdge(3, 5, 3);
+        gr.addEdge(3, 4, 2);
+        gr.addEdge(1, 4, 1);
+        gr.addEdge(2, 4, 2);
+        gr.addEdge(2, 1, 3);
+        gr.addEdge(4, 6, 6);
+        gr.addEdge(5, 6, 2);
+
+        Debug.Log(gr.search(5).getData());
     }
 
     // Update is called once per frame
