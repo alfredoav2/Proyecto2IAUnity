@@ -3,46 +3,46 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class DepthSearch<T> : MonoBehaviour
+public class DepthSearch : MonoBehaviour
 {
-	public DSNode<T> root;
-	public DSNode<T> last;
+	public DSNode root;
+	public DSNode last;
 
 	public DepthSearch()
 	{
 		root = null;
 		last = null;
 	}
-	public DepthSearch(T data)
+	public DepthSearch(float data)
 	{
-		root = new DSNode<T>(data);
+		root = new DSNode(data);
 		last = null;
 
 	}
-	public DepthSearch(DSNode<T> node) 
+	public DepthSearch(DSNode node) 
 	{
 		root = node;
 	}
 
-	public DSNode<T> searchDFSIterative(T data)
+	public DSNode searchDFSIterative(float data)
 	{
 		return lookforDPSIterative(data, root);
 	}
 
-	public DSNode<T> searchDFS(T data)
+	public DSNode searchDFS(float data)
 	{
 		return lookForDPS(data, root);
 	}
 
-	bool insert(T parent, T data)
+	bool insert(float parent, float data)
 	{
-		DSNode<T> tmp = lookForDPS(parent, root);
+		DSNode tmp = lookForDPS(parent, root);
 
 		if (!tmp.Equals(null))
 		{
-			if (!lookForDPS(data, root).Equals(null))
+			if (lookForDPS(data, root) != null)
 				return false;
-			DSNode<T> newNode = new DSNode<T>(data);
+			DSNode newNode = new DSNode (data);
 			tmp.vertex.Add(newNode);
 			newNode.parent = tmp;
 			return true;
@@ -53,9 +53,9 @@ public class DepthSearch<T> : MonoBehaviour
 		}
 	}
 
-	void erase(T data)
+	void erase(float data)
 	{
-		DSNode<T> to_erase = searchDFS(data);
+		DSNode to_erase = searchDFS(data);
 
 		if (!to_erase.Equals(null))
 		{
@@ -64,14 +64,14 @@ public class DepthSearch<T> : MonoBehaviour
 		}
 	}
 
-	DSNode<T> lookforDPSIterative(T data, DSNode<T> node)
+	DSNode lookforDPSIterative(float data, DSNode node)
 	{
 		if (node.Equals(null)) return null;
 
 		//Aqui se puede añadir a un stack
-		LinkedList<DSNode<T>> visited = new LinkedList<DSNode<T>>();
-		Stack<DSNode<T>> stack = new Stack<DSNode<T>>();
-		DSNode<T> current = node;
+		LinkedList<DSNode> visited = new LinkedList<DSNode>();
+		Stack<DSNode> stack = new Stack<DSNode>();
+		DSNode current = node;
 		stack.Push(node);
 		while (stack.Count > 0)
 		{
@@ -103,7 +103,7 @@ public class DepthSearch<T> : MonoBehaviour
 		return null;
 	}
 
-	public DSNode<T> lookForDPS(T data, DSNode<T> node)
+	public DSNode lookForDPS(float data, DSNode node)
 	{
 		if (node.Equals(null)) return null;
 
@@ -127,10 +127,10 @@ public class DepthSearch<T> : MonoBehaviour
 		return null;
 	}
 
-	DSNode<T> searchBFS(T data, DSNode<T> start)
+	DSNode searchBFS(float data, DSNode start)
 	{
-		LinkedList<DSNode<T>> visited = new LinkedList<DSNode<T>>();
-		Queue<DSNode<T>> queue = new Queue<DSNode<T>>();
+		LinkedList<DSNode> visited = new LinkedList<DSNode>();
+		Queue<DSNode> queue = new Queue<DSNode>();
 
 		visited.AddLast(start);
 		queue.Enqueue(start);
@@ -143,7 +143,7 @@ public class DepthSearch<T> : MonoBehaviour
 
 			for (int i = 0; i < start.vertex.Count; i++)
 			{
-				DSNode<T> tmp = start.vertex[i];
+				DSNode tmp = start.vertex[i];
 				if (!visited.Contains(tmp))
 				{
 					visited.AddLast(tmp);
@@ -158,8 +158,31 @@ public class DepthSearch<T> : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        
-    }
+		DepthSearch g = new DepthSearch(0);
+		g.insert(0, 1);
+		g.insert(0, 2);
+		g.insert(0, 4);
+		g.insert(0, 6);
+		g.insert(4, 5);
+		g.insert(0, 4);
+		g.insert(4, 5);
+		g.insert(0, 8);
+		g.insert(1, 10);
+		g.insert(4, 1);
+		g.insert(4, 9);
+		g.insert(10, 4);
+		g.insert(10, 20);
+		g.insert(5, 20);
+		g.insert(20, 50);
+		g.insert(20, 51);
+		g.insert(10, 52);
+		g.insert(10, 52);
+		g.insert(5, 20);
+		g.insert(9, 13);
+		g.insert(13, 15);
+
+		Debug.Log(g.searchDFS(9).value);
+	}
 
     // Update is called once per frame
     void Update()
