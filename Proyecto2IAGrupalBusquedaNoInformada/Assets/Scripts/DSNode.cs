@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DSNode
+public class DSNode : MonoBehaviour
 {
+
     public float value;
     public DSNode parent;
     public List<DSNode> vertex = new List<DSNode>();
