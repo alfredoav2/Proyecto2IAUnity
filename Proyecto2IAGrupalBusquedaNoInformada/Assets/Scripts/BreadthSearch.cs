@@ -38,6 +38,7 @@ public class BreadthSearch : MonoBehaviour
 					visited.AddFirst(tmp);
 					queue.Enqueue(tmp);
 					UgandaKnukles.Add(tmp);
+					Debug.Log("lol " + tmp.data);
 				}
 			}
 		}

@@ -45,7 +45,7 @@ public class IterativeBreadthSearch : MonoBehaviour
                 {
                     stack.Push(current.adyacentes[i]);
                     UgandaKnukles.Add(current.adyacentes[i]);
-                    //Debug.Log(current.adyacentes[i].data);
+                    Debug.Log(current.adyacentes[i].data);
                 }
             }
         }
@@ -75,8 +75,12 @@ public class IterativeBreadthSearch : MonoBehaviour
     void Start()
     {
 
-        IterativeBS(graph.search(dataStart), graph.search(data));
+        //IterativeBS(graph.search(dataStart), graph.search(data));
         //Debug.Log(IterativeBS(graph.search(dataStart), graph.search(data)).data);
+    }
+    private void OnMouseDown()
+    {
+        IterativeBS(graph.search(dataStart), graph.search(data));
     }
 
     // Update is called once per frame
