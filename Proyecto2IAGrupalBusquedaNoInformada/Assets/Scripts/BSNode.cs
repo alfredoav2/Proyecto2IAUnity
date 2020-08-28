@@ -8,7 +8,8 @@ public class BSNode : MonoBehaviour
     public float data;
     public float val = 100000;
     public bool visitado = false;
-    public int level;
+    public int levelx;
+    public int levely;
     public BSNode padre;
     public List<BSNode> adyacentes = new List<BSNode>();
     public List<float> costoAdyacentes = new List<float>();

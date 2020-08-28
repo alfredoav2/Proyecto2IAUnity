@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class Graph : MonoBehaviour
 {
     [SerializeField]
     public Queue<BSNode> qv = new Queue<BSNode>();
+    List<BSNode> nodes = new List<BSNode>();
     public GameObject nodoChad;
     public BSNode padre = null;
     int y = -4;
@@ -17,30 +20,16 @@ public class Graph : MonoBehaviour
             padre = new BSNode(data, v);
         }
     }
-    public void GraphGenerator(BSNode nodo)
+    public void GraphGenerator(BSNode nodo, int y)
     {
-        if (y > 2)
-        {
-            y = -4;
-        }
-        y += 2;
-        if (nodo.level == 1)
-        {
-            nodoChad.transform.position = new Vector2(-3, y);
-        }
-        else if (nodo.level == 2)
-        {
 
-            nodoChad.transform.position = new Vector2(0, y);
-
-        }
-        else if (nodo.level == 3)
+        if (nodes.Count > 6)
+        foreach (BSNode n in nodes)
         {
-            nodoChad.transform.position = new Vector2(3, y);
-
+            n.transform.position = new Vector2(n.levelx, n.levely);
         }
     }
-    public void addEdge(float dataParent, float data, float cost, int level)
+    public void addEdge(float dataParent, float data, float cost, int level, int y)
     {
         BSNode tmp = DSearch(dataParent);
         if (tmp != null && !dataParent.Equals(data))
@@ -49,9 +38,11 @@ public class Graph : MonoBehaviour
             {
 
                 BSNode nodo = Instantiate(nodoChad).GetComponent<BSNode>();
-                nodo.level = level;
-              
-                GraphGenerator(nodo);
+                nodo.levelx = level;
+                nodo.levely = y;
+                nodes.Add(nodo);
+                GraphGenerator(nodo, y);
+
                 //Comentario para que no se nos olvide
                 //Asignarle dato y val
                 nodo.data = data;
@@ -186,22 +177,26 @@ public class Graph : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        addEdge(0, 1, 1, -3, 4);
+        addEdge(0, 2, 2, -3, 2);
+        addEdge(0, 8, 3, -3, 0);
+        addEdge(0, 3, 5, -3, -2);
+        addEdge(3, 5, 3, 0, 4);
+        addEdge(3, 4, 2, 0, 2);
+        addEdge(1, 4, 1, 0, 2);
+        addEdge(2, 4, 2, 0, 2);
+        addEdge(2, 1, 3, -3, 4);
+        addEdge(4, 6, 6, 3, 4);
+        addEdge(5, 6, 2, 3, 4);
+
+        Debug.Log(search(5).getData());
+    }
     // Start is called before the first frame update
     void Start()
     {
 
-        addEdge(0, 1, 1,1);
-        addEdge(0, 2, 2,1);
-        addEdge(0, 8, 3,1);
-        addEdge(0, 3, 5,1);
-        addEdge(3, 5, 3,2);
-        addEdge(3, 4, 2,2);
-        addEdge(1, 4, 1,2);
-        addEdge(2, 4, 2,2);
-        addEdge(2, 1, 3,1);
-        addEdge(4, 6, 6,3);
-        addEdge(5, 6, 2,2);
 
-        Debug.Log(search(5).getData());
     }
 }
