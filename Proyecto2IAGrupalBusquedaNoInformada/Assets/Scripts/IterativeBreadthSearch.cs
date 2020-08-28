@@ -8,9 +8,8 @@ public class IterativeBreadthSearch : MonoBehaviour
     public int dataStart;
     public BSNode nodusMaximus;
     public Graph graph;
-    List<BSNode> visited = new List<BSNode>();
     Stack stack = new Stack();
-
+    public List<BSNode> UgandaKnukles = new List<BSNode>(); 
     // Start is called before the first frame update
 
     public BSNode IterativeBS(BSNode start, BSNode node)
@@ -22,7 +21,7 @@ public class IterativeBreadthSearch : MonoBehaviour
         List<BSNode> visited = new List<BSNode>();
         Stack<BSNode> stack = new Stack<BSNode>();
         BSNode current = node;
-        stack.Push(node);
+        stack.Push(start);
         while (stack.Count > 0)
         {
             current = stack.Peek();
@@ -31,11 +30,12 @@ public class IterativeBreadthSearch : MonoBehaviour
             if (!visited.Contains(current))
             {
                 visited.Add(current);
-
             }
 
             if (current.getData() == data)
             {
+                //UgandaKnukles.Add(current);
+                //Debug.Log(current.data);
                 return current;
             }
 
@@ -44,10 +44,11 @@ public class IterativeBreadthSearch : MonoBehaviour
                 if (!visited.Contains(current.adyacentes[i]))
                 {
                     stack.Push(current.adyacentes[i]);
+                    UgandaKnukles.Add(current.adyacentes[i]);
+                    //Debug.Log(current.adyacentes[i].data);
                 }
             }
         }
-
         return null;
         //BSNode current = nodusMaximus;
 
@@ -73,9 +74,9 @@ public class IterativeBreadthSearch : MonoBehaviour
     }
     void Start()
     {
-        
-       
-        Debug.Log(IterativeBS(graph.search(dataStart), graph.search(data)).data);
+
+        IterativeBS(graph.search(dataStart), graph.search(data));
+        //Debug.Log(IterativeBS(graph.search(dataStart), graph.search(data)).data);
     }
 
     // Update is called once per frame

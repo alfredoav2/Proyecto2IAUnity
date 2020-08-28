@@ -54,7 +54,7 @@ public class BidirectionalSearch : MonoBehaviour
 			if (lookForDPS(pathToEnd[pathToEnd.Count - 1].value, start))
 			{
 				tmp = pathToEnd[pathToEnd.Count - 1];
-
+ 
 				return tmp;
 			}
 
