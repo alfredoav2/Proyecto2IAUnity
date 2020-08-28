@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class BreadthSearch : MonoBehaviour
 {
-	public DSNode end;
-	public DSNode begining;
-	public DSNode searchBFS(float data, DSNode start)
+	public Graph graph;
+	public int endValue;
+	public int beginingValue;
+	public BSNode end;
+	public BSNode begining;
+	public List<BSNode> UgandaKnukles = new List<BSNode>();
+	public BSNode searchBFS(float data, BSNode start)
 	{
-		data = end.value;
-		start = begining;
+		LinkedList<BSNode> visited = new LinkedList<BSNode>();
+		Queue<BSNode> queue = new Queue<BSNode>();
 
-		LinkedList<DSNode> visited = new LinkedList<DSNode>();
-		Queue<DSNode> queue = new Queue<DSNode>();
+		//data = endValue;
+		//start = begining;
+
+		
 
 		visited.AddLast(start);
 		queue.Enqueue(start);
@@ -20,20 +26,33 @@ public class BreadthSearch : MonoBehaviour
 		while (queue.Count > 0)
 		{
 			start = queue.Peek();
-			if (start.value.Equals(data)) return start;
+			if (start.getData().Equals(data)) return start;
 			queue.Dequeue();
 
-			for (int i = 0; i < start.vertex.Count; i++)
+			for (int i = 0; i < start.adyacentes.Count; i++)
 			{
-				DSNode tmp = start.vertex[i];
+				BSNode tmp = start.adyacentes[i];
+
 				if (!visited.Contains(tmp))
 				{
-					visited.AddLast(tmp);
+					visited.AddFirst(tmp);
 					queue.Enqueue(tmp);
+					UgandaKnukles.Add(tmp);
+					Debug.Log("lol " + tmp.data);
 				}
 			}
 		}
 
 		return null;
+	}
+    private void Start()
+    {
+		//searchBFS(endValue, begining);
+	
+	}
+
+    private void OnMouseDown()
+    {
+		Debug.Log(searchBFS(endValue, begining).data);
 	}
 }

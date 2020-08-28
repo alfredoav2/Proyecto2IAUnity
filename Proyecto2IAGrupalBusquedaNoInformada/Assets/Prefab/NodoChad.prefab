@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4670766620277648339}
   - component: {fileID: 9172746943046076054}
   m_Layer: 0
-  m_Name: perro1 (5)
+  m_Name: NodoChad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
