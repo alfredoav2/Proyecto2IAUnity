@@ -7,6 +7,7 @@ public class Graph : MonoBehaviour
     public Queue<BSNode> qv = new Queue<BSNode>();
     public GameObject nodoChad;
     public BSNode padre = null;
+    int y = -4;
 
     public Graph() { }
     public Graph(float data, int v)
@@ -16,8 +17,30 @@ public class Graph : MonoBehaviour
             padre = new BSNode(data, v);
         }
     }
+    public void GraphGenerator(BSNode nodo)
+    {
+        if (y > 2)
+        {
+            y = -4;
+        }
+        y += 2;
+        if (nodo.level == 1)
+        {
+            nodoChad.transform.position = new Vector2(-3, y);
+        }
+        else if (nodo.level == 2)
+        {
 
-    public void addEdge(float dataParent, float data, float cost)
+            nodoChad.transform.position = new Vector2(0, y);
+
+        }
+        else if (nodo.level == 3)
+        {
+            nodoChad.transform.position = new Vector2(3, y);
+
+        }
+    }
+    public void addEdge(float dataParent, float data, float cost, int level)
     {
         BSNode tmp = DSearch(dataParent);
         if (tmp != null && !dataParent.Equals(data))
@@ -26,6 +49,9 @@ public class Graph : MonoBehaviour
             {
 
                 BSNode nodo = Instantiate(nodoChad).GetComponent<BSNode>();
+                nodo.level = level;
+              
+                GraphGenerator(nodo);
                 //Comentario para que no se nos olvide
                 //Asignarle dato y val
                 nodo.data = data;
@@ -164,17 +190,17 @@ public class Graph : MonoBehaviour
     void Start()
     {
 
-        addEdge(0, 1, 1);
-        addEdge(0, 2, 2);
-        addEdge(0, 8, 3);
-        addEdge(0, 3, 5);
-        addEdge(3, 5, 3);
-        addEdge(3, 4, 2);
-        addEdge(1, 4, 1);
-        addEdge(2, 4, 2);
-        addEdge(2, 1, 3);
-        addEdge(4, 6, 6);
-        addEdge(5, 6, 2);
+        addEdge(0, 1, 1,1);
+        addEdge(0, 2, 2,1);
+        addEdge(0, 8, 3,1);
+        addEdge(0, 3, 5,1);
+        addEdge(3, 5, 3,2);
+        addEdge(3, 4, 2,2);
+        addEdge(1, 4, 1,2);
+        addEdge(2, 4, 2,2);
+        addEdge(2, 1, 3,1);
+        addEdge(4, 6, 6,3);
+        addEdge(5, 6, 2,2);
 
         Debug.Log(search(5).getData());
     }
