@@ -17,8 +17,22 @@ public class Comparador : MonoBehaviour
     {
         
     }
+
+    bool compare(List<BSNode> one, List<BSNode> two)
+    {
+
+        if(one.Count == two.Count)
+        {
+            return true;
+        }
+
+        return false;
+    }
     private void OnMouseDown()
     {
-        
+        if(compare(ite.UgandaKnukles, bre.UgandaKnukles) == false)
+        {
+            Debug.Log("ño");
+        }
     }
 }
