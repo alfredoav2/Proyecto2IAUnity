@@ -6,6 +6,8 @@ public class Comparador : MonoBehaviour
 {
     public IterativeBreadthSearch ite;
     public BreadthSearch bre;
+    public DepthSearch DFS;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,10 @@ public class Comparador : MonoBehaviour
         if(compare(ite.UgandaKnukles, bre.UgandaKnukles) == false)
         {
             Debug.Log("ño");
+        }
+        else
+        {
+            Debug.Log("sim");
         }
     }
 }

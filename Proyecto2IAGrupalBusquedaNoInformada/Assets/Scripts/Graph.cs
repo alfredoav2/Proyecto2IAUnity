@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class Graph : MonoBehaviour
 {
     [SerializeField]
     public Queue<BSNode> qv = new Queue<BSNode>();
+    List<BSNode> nodes = new List<BSNode>();
     public GameObject nodoChad;
     public BSNode padre = null;
+    int y = -4;
 
     public Graph() { }
     public Graph(float data, int v)
@@ -16,8 +20,16 @@ public class Graph : MonoBehaviour
             padre = new BSNode(data, v);
         }
     }
+    public void GraphGenerator(BSNode nodo, int y)
+    {
 
-    public void addEdge(float dataParent, float data, float cost)
+        if (nodes.Count > 6)
+        foreach (BSNode n in nodes)
+        {
+            n.transform.position = new Vector2(n.levelx, n.levely);
+        }
+    }
+    public void addEdge(float dataParent, float data, float cost, int level, int y)
     {
         BSNode tmp = DSearch(dataParent);
         if (tmp != null && !dataParent.Equals(data))
@@ -26,6 +38,11 @@ public class Graph : MonoBehaviour
             {
 
                 BSNode nodo = Instantiate(nodoChad).GetComponent<BSNode>();
+                nodo.levelx = level;
+                nodo.levely = y;
+                nodes.Add(nodo);
+                GraphGenerator(nodo, y);
+
                 //Comentario para que no se nos olvide
                 //Asignarle dato y val
                 nodo.data = data;
@@ -160,22 +177,26 @@ public class Graph : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        addEdge(0, 1, 1, -3, 4);
+        addEdge(0, 2, 2, -3, 2);
+        addEdge(0, 8, 3, -3, 0);
+        addEdge(0, 3, 5, -3, -2);
+        addEdge(3, 5, 3, 0, 4);
+        addEdge(3, 4, 2, 0, 2);
+        addEdge(1, 4, 1, 0, 2);
+        addEdge(2, 4, 2, 0, 2);
+        addEdge(2, 1, 3, -3, 4);
+        addEdge(4, 6, 6, 3, 4);
+        addEdge(5, 6, 2, 3, 4);
+
+        Debug.Log(search(5).getData());
+    }
     // Start is called before the first frame update
     void Start()
     {
 
-        addEdge(0, 1, 1);
-        addEdge(0, 2, 2);
-        addEdge(0, 8, 3);
-        addEdge(0, 3, 5);
-        addEdge(3, 5, 3);
-        addEdge(3, 4, 2);
-        addEdge(1, 4, 1);
-        addEdge(2, 4, 2);
-        addEdge(2, 1, 3);
-        addEdge(4, 6, 6);
-        addEdge(5, 6, 2);
 
-        Debug.Log(search(5).getData());
     }
 }
